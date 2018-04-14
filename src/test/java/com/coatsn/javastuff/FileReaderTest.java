@@ -1,33 +1,33 @@
 package com.coatsn.javastuff;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class FileReaderTest {
+	
+	private FileReader fileReader;
+	private String fileName;
+	
+	@Before
+	public void setup() {
+		fileReader = new FileReader();
+		fileName = "people.txt";
+	}
 
 	@Test
 	public void itShouldReadTheFileWithoutException() {
-		List<String> lines = new BufferedReader(
-				new InputStreamReader(ClassLoader.getSystemResourceAsStream("people.txt"))).lines().collect(Collectors.toList());
-		
+		List<String> lines = fileReader.readFile(fileName);
 		assertNotNull("Lines collected from file should not be null", lines);
 	}
-	
+
 	@Test
 	public void itShouldCreatePeopleFromFile() {
-		List<String> lines = new BufferedReader(
-				new InputStreamReader(ClassLoader.getSystemResourceAsStream("people.txt"))).lines().collect(Collectors.toList());
-
-		// create people from file
-		List<Person> people = lines.stream().map(line -> new Person(line)).collect(Collectors.toList());
-		people.stream().forEach(p -> System.out.println("person: " + p));
-		
+		List<Person> people = fileReader.buildPeopleFromFile(fileName);
 		assertTrue("It should create a List of people from the file entries", people.size() == 5);
 	}
 }
