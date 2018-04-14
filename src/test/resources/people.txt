@@ -1,0 +1,5 @@
+Jen 25 FEMALE
+Nick 32 Male
+Ben 54 MALE
+Jack 35 MALE
+Margo 43 female
